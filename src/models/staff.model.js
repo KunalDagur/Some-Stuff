@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Mongoose, Schema } from "mongoose";
 
 const staffSchema = new Schema({
     name: {
@@ -8,8 +8,36 @@ const staffSchema = new Schema({
     email: {
         type: String,
         required: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    id: {
+        type: Number,
+        required: true,
+        unique: true
+    },
+    department: {
+        type: String,
+        required: true
+    },
+    position: {
+        type: String,
+        required: true
+    },
+    profileImage: {
+        type: String,
+        required: true
+    },
+    dob: {
+        type: Date,
+        required: true
+    },
+    gender: {
+        type: String,
+        required: true
     }
-
 },
     {
         timestamps: true
@@ -17,4 +45,4 @@ const staffSchema = new Schema({
 );
 
 
-export default staffSchema
+export const Staff = new Mongoose.model("Staff", staffSchema)
