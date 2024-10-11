@@ -4,5 +4,5 @@ import asyncHandler from "../utils/asyncHandler.js";
 
 
 const registerStaff = asyncHandler(async (req, res) => {
-    const { name, email, password, department, position, dob } = req.body;
+    const { name, email, password, department, dob } = req.body;
 })
