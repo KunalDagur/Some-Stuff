@@ -1,4 +1,5 @@
-import { Mongoose, Schema } from "mongoose";
+import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
 const staffSchema = new Schema({
     name: {
@@ -46,4 +47,4 @@ const staffSchema = new Schema({
 );
 
 
-export const Staff = new Mongoose.model("Staff", staffSchema)
+export const Staff = mongoose.model("Staff", staffSchema)
