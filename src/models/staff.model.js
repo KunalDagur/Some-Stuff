@@ -26,15 +26,15 @@ const staffSchema = new Schema({
     },
     position: {
         type: String,
-        required: true
+        // required: true
     },
     profileImage: {
         type: String,
-        required: true
+        // required: true
     },
     dob: {
         type: Date,
-        required: true
+        // required: true
     },
     gender: {
         type: String,

@@ -1,9 +1,9 @@
 import apiError from "../utils/apiError.js";
 import apiResponse from "../utils/apiResponse.js";
 import asyncHandler from "../utils/asyncHandler.js";
-import staffModel from "../models/staff.model.js";
+// import staffModel from "../models/staff.model.js";
 import { Staff } from "../models/staff.model.js";
-import mongoose from "mongoose";
+import { mongoose } from "mongoose";
 
 
 const registerStaff = asyncHandler(async (req, res) => {
@@ -43,17 +43,18 @@ const registerStaff = asyncHandler(async (req, res) => {
     console.log(department)
 
     const staff = await Staff.create({
-        name,
-        email,
+        name: name,
+        email: email,
         password,
-        department
+        department,
+        gender
     })
 
     console.log(staff)
 
-    // if (!dob) {
-    //     throw new apiError(400, "Date of birth is required");
-    // }
+    if (!staff) {
+        throw new apiError(400, "Something went wrong");
+    }
 
     return res
         .status(201)

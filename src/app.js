@@ -16,7 +16,7 @@ app.use(cookieParser())
 
 import staffRouter from "./routes/staff.route.js"
 
-
+// console.log("staffRouter")
 
 app.use("/api/v1/staff", staffRouter)
 
