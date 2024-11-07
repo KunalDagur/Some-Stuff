@@ -1,5 +1,6 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const staffSchema = new Schema({
     name: {
@@ -28,7 +29,10 @@ const staffSchema = new Schema({
         type: String,
         // required: true
     },
-    profileImage: {
+    avatar: {
+        type: String,
+    },
+    coverImage: {
         type: String,
         // required: true
     },
@@ -45,6 +49,41 @@ const staffSchema = new Schema({
         timestamps: true
     }
 );
+
+staffSchema.pre("save", function (next) {
+    if (!password.isModified()) return next();
+    this.password = bcrypt.hash(this.password, 10)
+    return next();
+})
+
+staffSchema.methods.isPasswordCorrect = async function (password) {
+    return await bcrypt.compare(password, this.password);
+}
+
+staffSchema.methods.generateAccessToken = async function () {
+    return jwt.sign({
+        _id: this._id,
+        email: this.email,
+        name: this.name,
+        department: this.department,
+    },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+        })
+}
+
+staffSchema.methods.generateRefreshToken = async function () {
+    return jwt.sign({
+        id: this._id,
+    },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        }
+    )
+}
+
 
 
 export const Staff = mongoose.model("Staff", staffSchema)
